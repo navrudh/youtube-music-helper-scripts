@@ -14,7 +14,17 @@ class Track:
         return self.title + " - " + self.artist
 
     @staticmethod
-    def from_raw_tracks(raw_tracks, artist_field='artists'):
+    def from_raw_tracks(raw_tracks: list):
+        artist_field = None
+
+        if len(raw_tracks) != 0:
+            artist_field_candidates = ['artists', 'artist']
+            for field in artist_field_candidates:
+                if field in raw_tracks[0].keys():
+                    artist_field = field
+            if not artist_field:
+                raise Exception("Unable to guess artist field! Found: " + str(raw_tracks[0].keys()))
+
         return [Track(id=track['videoId'],
                       title=track['title'],
                       artist=' & '.join([

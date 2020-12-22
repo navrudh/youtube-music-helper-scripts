@@ -9,14 +9,15 @@ from utils.cli import query_yes_no
 
 def get_uploaded_track_info(ytm_client: YTMusic, limit=100):
     raw_tracks = ytm_client.get_library_upload_songs(limit=limit)
-    return Track.from_raw_tracks(raw_tracks, artist_field='artist')
+    return Track.from_raw_tracks(raw_tracks)
 
 
 def search_closest_uploaded_song(ytm_client: YTMusic, track: Union[str, Track]):
     found_tracks = ytm_client.search(str(track), filter='uploads')
-    if len(found_tracks) == 2: return found_tracks[1]['videoId']
+    found_tracks = Track.from_raw_tracks(found_tracks)
+    if len(found_tracks) == 2: return found_tracks[1].id
     if found_tracks:
-        pprint([t['title'] for t in found_tracks])
+        pprint(found_tracks)
         match_found = query_yes_no(
             f"Do you see a desired match for `{track}`?")
         if match_found:
