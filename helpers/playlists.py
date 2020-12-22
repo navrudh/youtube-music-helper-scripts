@@ -18,7 +18,7 @@ def get_user_playlist_by_title(ytm_client: YTMusic,
     raw_playlists = ytm_client.get_library_playlists(limit=limit)
     playlists = Playlist.from_raw(raw_playlists)
     for pl in playlists:
-        if pl.title is title:
+        if pl.title == title:
             return pl
 
 

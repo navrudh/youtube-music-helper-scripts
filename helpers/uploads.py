@@ -8,7 +8,7 @@ from utils.cli import query_yes_no
 
 
 def filterResultsBy(searchResults: List[dict], resultType: str):
-    return [res for res in searchResults if res['resultType'] is resultType]
+    return [res for res in searchResults if res['resultType'] == resultType]
 
 
 def get_uploaded_track_info(ytm_client: YTMusic, limit=100):
