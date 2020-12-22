@@ -1,7 +1,7 @@
 from config.client import get_client
 from config.state import State
 from helpers.playlists import get_playlist_info
-from helpers.uploads import search_closest_uploaded_song, get_uploaded_track_info
+from helpers.uploads import find_closest_uploaded_song_by_title, get_uploaded_track_info
 
 if __name__ == '__main__':
     yt_music = get_client()
@@ -25,5 +25,5 @@ if __name__ == '__main__':
     upload_tracks = [str(track) for track in state.state[state_key]['tracks']]
 
     for pl_track in playlist_tracks:
-        id = search_closest_uploaded_song(yt_music, pl_track)
+        id = find_closest_uploaded_song_by_title(yt_music, pl_track)
         yt_music.add_playlist_items(dest_playlist_id, [id])

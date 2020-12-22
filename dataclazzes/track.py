@@ -34,3 +34,11 @@ class Track:
                       for artist in track[artist_field] or ARTIST_W_NAME
                   ])) for track in raw_tracks
         ]
+
+    @staticmethod
+    def from_search_results(raw_tracks: list):
+        return [
+            Track(id=track['videoId'],
+                  title=track['title'],
+                  artist=track['artist']['name']) for track in raw_tracks
+        ]

@@ -1,5 +1,5 @@
 from pprint import pprint
-from typing import Union
+from typing import Union, List
 
 from ytmusicapi import YTMusic
 
@@ -7,13 +7,17 @@ from dataclazzes.track import Track
 from utils.cli import query_yes_no
 
 
+def filterResultsBy(searchResults: List[dict], resultType: str):
+    return [res for res in searchResults if res['resultType'] is resultType]
+
+
 def get_uploaded_track_info(ytm_client: YTMusic, limit=100):
     raw_tracks = ytm_client.get_library_upload_songs(limit=limit)
     return Track.from_raw_tracks(raw_tracks)
 
 
-def search_closest_uploaded_song(ytm_client: YTMusic, track: Union[str,
-                                                                   Track]):
+def find_closest_uploaded_song_by_title(ytm_client: YTMusic,
+                                        track: Union[str, Track]):
     found_tracks = ytm_client.search(str(track), filter='uploads')
     found_tracks = Track.from_raw_tracks(found_tracks)
     if len(found_tracks) == 2: return found_tracks[1].id
@@ -37,3 +41,9 @@ def search_closest_uploaded_song(ytm_client: YTMusic, track: Union[str,
                     print("ERROR: Invalid choice entered!")
                 else:
                     return found_tracks[matched_idx]['videoId']
+
+
+def search_uploaded_tracks(ytm_client: YTMusic, query: str, limit: int = 20):
+    search_results = ytm_client.search(query, limit=limit, filter='uploads')
+    raw_tracks = filterResultsBy(search_results, 'song')
+    return Track.from_search_results(raw_tracks)
