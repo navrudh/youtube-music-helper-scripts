@@ -14,7 +14,9 @@ if __name__ == '__main__':
     if state_key not in state.state:
         state.state[state_key] = get_playlist_info(yt_music, src_playlist_id)
         state.save_state()
-    playlist_tracks = [str(track) for track in state.state[state_key]['tracks']]
+    playlist_tracks = [
+        str(track) for track in state.state[state_key]['tracks']
+    ]
 
     state_key = 'upload-tracks-3000'
     if state_key not in state.state:

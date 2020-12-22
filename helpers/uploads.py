@@ -12,7 +12,8 @@ def get_uploaded_track_info(ytm_client: YTMusic, limit=100):
     return Track.from_raw_tracks(raw_tracks)
 
 
-def search_closest_uploaded_song(ytm_client: YTMusic, track: Union[str, Track]):
+def search_closest_uploaded_song(ytm_client: YTMusic, track: Union[str,
+                                                                   Track]):
     found_tracks = ytm_client.search(str(track), filter='uploads')
     found_tracks = Track.from_raw_tracks(found_tracks)
     if len(found_tracks) == 2: return found_tracks[1].id

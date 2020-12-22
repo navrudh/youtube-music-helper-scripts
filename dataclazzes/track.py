@@ -23,10 +23,14 @@ class Track:
                 if field in raw_tracks[0].keys():
                     artist_field = field
             if not artist_field:
-                raise Exception("Unable to guess artist field! Found: " + str(raw_tracks[0].keys()))
+                raise Exception("Unable to guess artist field! Found: " +
+                                str(raw_tracks[0].keys()))
 
-        return [Track(id=track['videoId'],
-                      title=track['title'],
-                      artist=' & '.join([
-                          artist['name'] for artist in track[artist_field] or ARTIST_W_NAME
-                      ])) for track in raw_tracks]
+        return [
+            Track(id=track['videoId'],
+                  title=track['title'],
+                  artist=' & '.join([
+                      artist['name']
+                      for artist in track[artist_field] or ARTIST_W_NAME
+                  ])) for track in raw_tracks
+        ]

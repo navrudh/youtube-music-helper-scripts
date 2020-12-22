@@ -9,4 +9,3 @@ class Playlist:
     id: str
     title: str
     tracks: [Track]
-
