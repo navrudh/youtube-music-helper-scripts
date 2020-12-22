@@ -13,6 +13,6 @@ if __name__ == '__main__':
     if state_key not in state.state:
         state.state[state_key] = get_uploaded_track_info(yt_music, last_n_songs)
         state.save_state()
-    upload_tracks_ids = [track[1] for track in state.state[state_key]['tracks']][:last_n_songs]
+    upload_tracks_ids = [track.id for track in state.state[state_key]['tracks']][:last_n_songs]
 
     yt_music.add_playlist_items(dest_playlist_id, upload_tracks_ids)

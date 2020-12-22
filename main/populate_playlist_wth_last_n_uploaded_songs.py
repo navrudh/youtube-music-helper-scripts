@@ -14,13 +14,13 @@ if __name__ == '__main__':
     if state_key not in state.state:
         state.state[state_key] = get_playlist_info(yt_music, src_playlist_id)
         state.save_state()
-    playlist_tracks = [track[0] for track in state.state[state_key]['tracks']]
+    playlist_tracks = [str(track) for track in state.state[state_key]['tracks']]
 
     state_key = 'upload-tracks-3000'
     if state_key not in state.state:
         state.state[state_key] = get_uploaded_track_info(yt_music, 3000)
         state.save_state()
-    upload_tracks = [track[0] for track in state.state[state_key]['tracks']]
+    upload_tracks = [str(track) for track in state.state[state_key]['tracks']]
 
     for pl_track in playlist_tracks:
         id = search_closest_uploaded_song(yt_music, pl_track)
